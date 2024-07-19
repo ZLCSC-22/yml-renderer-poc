@@ -1,0 +1,7 @@
+components:
+  - id: banner
+    data:
+      title: "Hello world"
+  - id: banner
+    data:
+      title: "Hello tucker"

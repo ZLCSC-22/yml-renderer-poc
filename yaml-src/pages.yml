@@ -1,0 +1,5 @@
+pages:
+  - id: event1
+    route: /e1
+  - id: event2
+    route: /e2
