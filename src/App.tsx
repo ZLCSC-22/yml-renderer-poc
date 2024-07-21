@@ -23,6 +23,7 @@ function App() {
     <HashRouter>
       <Routes>
         {pages.map((p, i) => <Route key={i} path={p.route} element={<Page id={p.id}/>}/>)}
+        <Route path="/duck" element={<span>Hello</span>}/>
       </Routes>
     </HashRouter>
   )
@@ -33,7 +34,7 @@ function Page({id}: {id: string}) {
   useEffect(() => {
     (async () => yaml.load(await (await fetch(`http://127.0.0.1:5500/yaml-src/${id}.yml`)).text()))().then(d => setData(d))
     registerComponents()
-  }, [])
+  }, [id])
 
   if (data == undefined) return;
   const components: {id: string, data: any}[] = data.components
