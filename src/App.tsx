@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import * as yaml from 'js-yaml';
-import { BrowserRouter, HashRouter, Route, Router, Routes } from 'react-router-dom';
+import { HashRouter, Route, Routes } from 'react-router-dom';
+import { getComponent } from './ComponentManager';
+import { registerComponents } from './CustomComponents/init';
 
 function App() {
   const [data, setData] = useState<any>();
@@ -30,6 +32,7 @@ function Page({id}: {id: string}) {
   const [data, setData] = useState<any>();
   useEffect(() => {
     (async () => yaml.load(await (await fetch(`http://127.0.0.1:5500/yaml-src/${id}.yml`)).text()))().then(d => setData(d))
+    registerComponents()
   }, [])
 
   if (data == undefined) return;
@@ -40,17 +43,6 @@ function Page({id}: {id: string}) {
       {components.map((c, i) => getComponent(c, i))}
     </div>
   )
-}
-
-function getComponent(c: {id: string, data: any}, key: number) {
-  switch(c.id) {
-    case "banner":
-      return <Banner key={key} data={c.data}></Banner>
-  }
-}
-
-function Banner({data}: {data: any}) {
-  return <div>{data.title}</div>
 }
 
 export default App
